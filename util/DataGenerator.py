@@ -1,11 +1,20 @@
 import os
+import csv
 
 
-class DateGenerator:
+class DataGenerator:
     def __init__(self):
         print(os.getcwd())
+        self.data_list = []
         with open('../dataset/double_ll', 'r') as file:
-            self.ll_key = file.read()
+            self.data_list.append(file.read())
+        with open('/root/tmp/dataset/sqrt_minus.csv') as f:
+            reader = csv.reader(f)
+            error_list = list(reader)
+            self.data_list.append(error_list)
 
-    def generate_real_vals(self):
+
+generator = DataGenerator()
+print(generator.data_list)
+
 
