@@ -1,11 +1,13 @@
 //
 // Created by py on 2018/11/13.
 //
+
+// cd /root/tmp/examples/
 #include "iRRAM.h"
 
-const double start = 10e7;
 const double gap = 10000;
 using namespace iRRAM;
+orstream file("../dataset/sqrt_minus.csv", std::ios::app);
 
 double usual_sqrt_minus(double x) {
     return sqrt(x + 1) - sqrt(x);
@@ -20,14 +22,22 @@ double error(double x) {
 
 }
 
+void generate_data(int count) {
+    for(double i = count * gap; i < (count + 1) * gap; i++) {
+        file << i << "," << error(i) << "\n";
+    }
+    cout << "Part " << count << " finished..." << "\n";
+}
+
 
 void compute() {
-    orstream file("../dataset/sqrt_minus.csv", std::ios::out);
     file << "x,error\n";
-
-    for(double i = 0; i < 10e4; i += 1) {
-        //    cout << i << ' ' << error(i) << "\n";
-            file << i << "," << error(i) << "\n";
+    // 极限是400次，多次执行获取数据
+    for(int i = 0; i < 400; i++) {
+        generate_data(i);
     }
+
+
+
 
 }
