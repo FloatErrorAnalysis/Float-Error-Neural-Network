@@ -29,15 +29,11 @@ void generate_data(int count) {
     cout << "Part " << count << " finished..." << "\n";
 }
 
-
 void compute() {
     file << "x,error\n";
     // 极限是400次，多次执行获取数据
     for(int i = 0; i < 400; i++) {
         generate_data(i);
     }
-
-
-
 
 }
