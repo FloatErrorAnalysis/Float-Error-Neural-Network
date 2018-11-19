@@ -1,8 +1,0 @@
-#include "cmath"
-#include <iostream>
-#include <fstream>
-using namespace std;
-int main() {
-cout << sqrt(741) - sqrt(740) << endl;
-return 0;
-}
