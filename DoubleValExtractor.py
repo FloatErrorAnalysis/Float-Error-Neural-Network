@@ -38,7 +38,6 @@ class DoubleValExtractor:
 
         return self.double_functions
 
-    # TODO
     def extract_double_vars(self):
         for statement in self.double_statements:
             # 列出所有double型临时寄存器
@@ -53,7 +52,7 @@ class DoubleValExtractor:
         return list(set(self.double_statements + self.extract_double_functions()))
 
 
-extractor = DoubleValExtractor('/Users/py/GitHub/LLVM/functions/ll_file/sqrt_minus.ll')
-with open('double_ll', 'w') as f:
-    f.writelines(extractor.extract_double_concerned_statements())
-
+# extractor = DoubleValExtractor('/Users/py/GitHub/LLVM/functions/ll_file/sqrt_minus.ll')
+# with open('double_ll', 'w') as f:
+#     f.writelines(extractor.extract_double_concerned_statements())
+#

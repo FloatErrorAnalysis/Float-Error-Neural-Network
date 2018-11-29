@@ -1,21 +1,17 @@
 import os
 class CppGeneator:
     def generate_sqrt_minus(self):
-        cpp_str0 = '#include \"cmath\"\n' + \
-                   '#include <iostream>\n' + \
-                   '#include <fstream>\n' \
-                   'using namespace std;\n'\
-                    'int main() {\n'\
-                   'cout << sqrt('
-        cpp_str1 = ') - sqrt('
-        cpp_str2 = ') << endl;\nreturn 0;\n}'
-
-# '/tmp/pycharm_project/tmp/LLVM/cpp_files/'
+        cpp_str_prefix = '#include \"cmath\" \nusing namespace std;\n' \
+                   'double sqrt_minus(double x) {\n'
+        cpp_str0 ='   return sqrt(x + 1) - sqrt(x);\n' \
+        '}'
         file_path_prefix = '/tmp/pycharm_project/tmp/LLVM/cpp_files/sqrt_minus'
-        for i in range(0, 1000):
-           # os.mknod(file_path_prefix + str(i) + '.txt')
-            with open(file_path_prefix + str(i) + '.cpp', 'w') as f:
-                f.writelines(cpp_str0 + str(i + 1) + cpp_str1 + str(i) + cpp_str2)
-
+        # for i in range(0, 20):
+        #    # os.mknod(file_path_prefix + str(i) + '.txt')
+        #     with open(file_path_prefix + str(i) + '.cpp', 'w') as f:
+        #         f.writelines()
+        for i in range(1, 10):
+            with open(file_path_prefix + str(i) + 'cpp', 'w') as f:
+                f.writelines(cpp_str_prefix + cpp_str0.replace('x', str(i) + '*x'))
 cpp_gen = CppGeneator()
 cpp_gen.generate_sqrt_minus()
