@@ -87,13 +87,21 @@ class CppRawGenerator:
 
     # 路径修改 TODO
     def generate_csv(self):
+        # 编译
         for f in os.listdir('/root/tmp/examples/'):
             postfix = f.split('.')[-1]
-            if postfix == 'cc' or postfix == 'cpp' or postfix == 'c':
-                exe_cmd('make ' + '/root/tmp/examples/' + f.split('.')[0])
-                time.sleep(1)
+            if postfix == 'cpp':
+                print(f)
+                exe_cmd('cd /root/tmp/examples\n' + 'make ' + '/root/tmp/examples/' + f.split('.')[0])
+                time.sleep(2)
+
+        # 执行
+        for f in os.listdir('/root/tmp/examples/'):
+            prefix = f.split('.')[0]
+            if prefix:
+                print(f)
 
 
 print(os.getcwd())
 cpp_gen = CppRawGenerator()
-cpp_gen.generate_sqrt_minus_add(4)
+cpp_gen.generate_csv()
