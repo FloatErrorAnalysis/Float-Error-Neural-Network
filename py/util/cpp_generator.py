@@ -92,14 +92,14 @@ class CppRawGenerator:
             postfix = f.split('.')[-1]
             if postfix == 'cpp':
                 print(f)
-                exe_cmd('cd /root/tmp/examples\n' + 'make ' + '/root/tmp/examples/' + f.split('.')[0])
-                time.sleep(2)
+                exe_cmd('make ' + '/root/tmp/examples/' + f.split('.')[0])
+                time.sleep(1)
 
         # 执行
         for f in os.listdir('/root/tmp/examples/'):
-            prefix = f.split('.')[0]
-            if prefix:
+            if 'sqrt_minus' in f.split('.')[0] and '.' not in f:
                 print(f)
+                exe_cmd('/root/tmp/examples/' + f)
 
 
 print(os.getcwd())
