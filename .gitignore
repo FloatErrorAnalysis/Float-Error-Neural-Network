@@ -105,3 +105,4 @@ venv.bak/
 *.xml
 .idea
 *.iml
+py/util/CNN_PY.py

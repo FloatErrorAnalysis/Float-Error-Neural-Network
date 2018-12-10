@@ -5,6 +5,7 @@ from py.CNN import CNN
 import numpy as np
 import os
 
+
 def generate_data():
     ll_train = []
     error_train = []
@@ -21,12 +22,21 @@ def generate_data():
 
 
 def get_top5(csv_name):
-    reader = csv.reader(open('../dataset/' + csv_name), delimiter=',')
+    reader = csv.reader(open('/root/tmp/dataset/' + csv_name), delimiter=',')
     data_list = dict(reader)
     for k, v in data_list.items():
         data_list[k] = float(v)
     sorted_list = sorted(data_list.items(), key=operator.itemgetter(1), reverse=True)
     return sorted_list[:5]
+
+
+def list_top5():
+    error_list = []
+    for f in os.listdir('/root/tmp/dataset/'):
+        if f.split('.')[-1] == 'csv':
+           # print(get_top5(f))
+            error_list.append(get_top5(f))
+    return error_list
 
 
 def run_training():
@@ -58,5 +68,5 @@ def run_training():
     sess.close()
 
 
-run_training()
+
 

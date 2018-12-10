@@ -21,24 +21,23 @@ class CppRawGenerator:
 
     error_str2_1 = 'REAL sqrt_minus_real(const REAL &x) {\n'
 
-    error_str2_2 = '  return REAL(sqrt(x+1)) - REAL(sqrt(x));\n}\n'
+    error_str2_2 = '  return REAL(1) / (REAL(sqrt(x + 1)) + REAL(sqrt(x)));\n}\n'
 
     error_str3 = 'void generate_data(double low_bound, double high_bound, double gap) {\n' \
-                 '  orstream file("../../dataset/error_sqrt_minus'\
+                 '  orstream file("/root/tmp/dataset/'\
 
     error_str4 = '.csv", std::ios::out);\n' \
-                 '  file << "x,y\\n";\n' \
                  '  int number = static_cast<int>((high_bound - low_bound) / gap);\n' \
                  '  double current_input = low_bound;\n' \
                  '  for (int i = 0; i <= number; i++) {\n' \
                  '      double result_error = sqrt_minus_error(current_input);\n' \
                  '      REAL result_real = sqrt_minus_real(current_input);\n' \
-                 '      file << current_input << "," << abs((result_real - REAL(result_error)).as_double()) << "\\n";\n' \
+                 '      file << current_input << "," << abs(REAL(result_real) - REAL(result_error)).as_double() << "\\n";\n' \
                  '      current_input += gap;\n' \
                  '  }\n' \
                  '}\n' \
                  'void compute() {\n' \
-                 '  generate_data(1, 10000, 1);\n' \
+                 '  generate_data(0, 10000, 1);\n' \
                  '}\n'
 
     cpp_prefix_path = '../../dataset/sqrt_minus'
@@ -69,6 +68,7 @@ class CppRawGenerator:
                 cpp_str = self.cpp_str_prefix + cpp_str
                 f.writelines(cpp_str)
 
+
             # csv cpp
             # 需要修改本机对应的路径
             with open('/root/tmp/examples/sqrt_minus' + str(i) + '.cpp', 'w') as f:
@@ -82,8 +82,9 @@ class CppRawGenerator:
             cpp_lst = f.readlines()
         return cpp_lst
 
-    def generate_ll(self, aim_dir):
-        generate_bytecode(aim_dir)
+
+    def generate_add_ll(self):
+        generate_bytecode('../../cpp_raw/add/')
 
     # 路径修改 TODO
     def generate_csv(self):
@@ -92,16 +93,20 @@ class CppRawGenerator:
             postfix = f.split('.')[-1]
             if postfix == 'cpp':
                 print(f)
-                exe_cmd('make ' + '/root/tmp/examples/' + f.split('.')[0])
+             #   exe_cmd('cd /root/tmp/examples')
+                exe_cmd(self.cmd0 + '\n make ' + '/root/tmp/examples/' + f.split('.')[0])
                 time.sleep(1)
 
         # 执行
         for f in os.listdir('/root/tmp/examples/'):
+            print('Execute csv...')
             if 'sqrt_minus' in f.split('.')[0] and '.' not in f:
                 print(f)
-                exe_cmd('/root/tmp/examples/' + f)
+                exe_cmd(self.cmd0 + '\n./' + f)
 
 
 print(os.getcwd())
 cpp_gen = CppRawGenerator()
+cpp_gen.generate_sqrt_minus_add(30)
+cpp_gen.generate_add_ll()
 cpp_gen.generate_csv()

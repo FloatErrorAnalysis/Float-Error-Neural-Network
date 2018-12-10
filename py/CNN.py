@@ -106,3 +106,4 @@ class CNN:
         with self.graph.as_default():
             train_op = tf.train.AdamOptimizer(beta2=0.9999).minimize(self.loss)
             return train_op
+
