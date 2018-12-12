@@ -32,4 +32,3 @@ def exe_cmd(cmd):
 
 if __name__ == '__main__':
     print(os.getcwd())
-    generate_bytecode('../cpp_raw/')

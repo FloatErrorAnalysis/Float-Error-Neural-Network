@@ -12,7 +12,7 @@ train = True
 model_path = ''
 
 
-# shape of lls: (6,)	shape of errors: (5, 5, 2)
+# shape of lls: (len(dataset), 1412)	shape of errors: (len(dataset), 5, 2)
 datas_placeholder = tf.placeholder(tf.float32, [6, None])
 labels_placeholder = tf.placeholder(tf.int32, [5, 5, 2])
 

@@ -1,4 +1,5 @@
 import tensorflow as tf
+from py.util.data_generator import read_data
 
 
 class CNN:
@@ -6,7 +7,7 @@ class CNN:
         # 参数设置
         self.batch_size = 64
         # byte code的输入格式定义为 150 * 32
-        # TODO
+        # TODO 对sqrt最终的字节码shape为1412
         # FIX 改成了 180 * 32
         self.input_x = 180
         self.input_y = 32
@@ -27,6 +28,7 @@ class CNN:
             x = tf.placeholder(tf.float32, [None, self.input_x * self.input_y])
             # 输出定义
             y = tf.placeholder(tf.float32, [None, self.output_size])
+
             # dropout操作，减少过拟合，其实就是降低上一层某些输入的权重scale，甚至置为0，升高某些输入的权值，甚至置为2，防止评测曲线出现震荡，个人觉得样本较少时很必要
             # 使用占位符，由dropout自动确定scale，也可以自定义，比如0.5，根据tensorflow文档可知，程序中真实使用的值为1/0.5=2，也就是某些输入乘以2，同时某些输入乘以0
             keep_prob = tf.placeholder(tf.float32)
@@ -106,4 +108,13 @@ class CNN:
         with self.graph.as_default():
             train_op = tf.train.AdamOptimizer(beta2=0.9999).minimize(self.loss)
             return train_op
+
+
+# lls, errors = read_data()
+# batch
+cnn = CNN()
+print(cnn.build_model())
+
+
+
 

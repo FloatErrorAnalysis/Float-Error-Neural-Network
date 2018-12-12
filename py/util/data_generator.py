@@ -12,9 +12,6 @@ def generate_ll():
     lls = []
     generate_bytecode(cpp_dir_path)
     for ll in sorted(os.listdir(ll_dir_path)):
-       # print(ll)
-       #  with open(ll_dir_path + ll, 'rb') as f:
-       #      lls.append(f)
         with open(ll_dir_path + ll, 'rb') as f:
             byte = f.read(1)
             bytes = []
@@ -50,6 +47,7 @@ def read_data():
     print('Length of ll: ' + str(len(lls)))
     lls = np.array(lls)
     errors = np.array(errors)
+    print('The length of error: ' + str(len(errors)))
     print("shape of lls: {}\tshape of errors: {}".format(lls.shape, errors.shape))
     return lls, errors
 
