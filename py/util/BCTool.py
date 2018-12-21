@@ -13,11 +13,11 @@ def generate_bytecode(path):
             name = f[:index]
 
             # def ll&bc dir
-            dir_ll = '../../cpp_ll/'
-            dir_bc = '../../cpp_bc/'
+            dir_ll = '/root/tmp/sqrt_minus_raw/ll/'
+            dir_bc = '/root/tmp/sqrt_minus_raw/bc/'
 
             # use llvm-clang to compile the source file
-            exe_cmd('clang -O0 -emit-llvm ' + path + f + ' -S -o ' + dir_ll + name + '.ll')
+            exe_cmd('clang -O0 -emit-llvm ' + path + '/' + f + ' -S -o ' + dir_ll + name + '.ll')
             exe_cmd('llvm-as ' + dir_ll + name + '.ll -o ' + dir_bc + name + '.bc')
 
 

@@ -4,15 +4,16 @@ import operator
 import numpy as np
 from py.util.BCTool import generate_bytecode
 
-cpp_dir_path = '../cpp_raw/'
-ll_dir_path = '../cpp_bc/'
+cpp_dir_path = '/root/tmp/sqrt_minus_raw'
+ll_dir_path = '/root/tmp/sqrt_minus_raw/ll'
+bc_dir_path = '/root/tmp/sqrt_minus_raw/bc'
 
 
 def generate_ll():
     lls = []
     generate_bytecode(cpp_dir_path)
     for ll in sorted(os.listdir(ll_dir_path)):
-        with open(ll_dir_path + ll, 'rb') as f:
+        with open(ll_dir_path + '/' + ll, 'rb') as f:
             byte = f.read(1)
             bytes = []
             while byte:
@@ -52,7 +53,5 @@ def read_data():
     return lls, errors
 
 
-
-
 if __name__ == '__main__':
-    read_data()
+    generate_ll()

@@ -92,5 +92,5 @@ with tf.Session(graph=graph) as sess:
             train_losses.append(train_loss)
             accus.append(accu)
         print('Average training loss: ', sum(train_losses) / len(train_losses))
+        print(accus)
         print('Accuracy: ', sum(accus) / len(accus))
-

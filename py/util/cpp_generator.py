@@ -61,7 +61,7 @@ class CppRawGenerator:
     # sqrt(x + n + 1) - sqrt(x + n)
     def generate_sqrt_minus_add(self, num):
         for i in range(1, num + 1):
-            with open(self.file_path_prefix + 'add/sqrt_minus' + str(i) + '.cpp', 'w') as f:
+            with open('/root/tmp/sqrt_minus_raw/sqrt_minus' + str(i) + '.cpp', 'w') as f:
                 cpp_str = self.cpp_str0.replace('x', 'x+' + str(i))
                 cpp_str = cpp_str.replace('x+' + str(i) + '+1', 'x+' + str(i + 1)) + '\n'
                 tmp = cpp_str
@@ -82,9 +82,6 @@ class CppRawGenerator:
             cpp_lst = f.readlines()
         return cpp_lst
 
-
-    def generate_add_ll(self):
-        generate_bytecode('../../cpp_raw/add/')
 
     # 路径修改 TODO
     def generate_csv(self):
@@ -107,6 +104,6 @@ class CppRawGenerator:
 
 print(os.getcwd())
 cpp_gen = CppRawGenerator()
-cpp_gen.generate_sqrt_minus_add(30)
-cpp_gen.generate_add_ll()
+cpp_gen.generate_sqrt_minus_add(300)
 cpp_gen.generate_csv()
+
