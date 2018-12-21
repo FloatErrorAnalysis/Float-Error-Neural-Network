@@ -1,13 +1,12 @@
 import tensorflow as tf
 from py.util.data_generator import read_data
 
-
 class CNN:
     def __init__(self):
         # 参数设置
         self.batch_size = 64
         # byte code的输入格式定义为 150 * 32
-        # TODO 对sqrt最终的字节码shape为1412
+        # TODO
         # FIX 改成了 180 * 32
         self.input_x = 180
         self.input_y = 32
@@ -25,10 +24,9 @@ class CNN:
     def build_placeholder(self):
         with self.graph.as_default():
             # 声明一个占位符，None表示输入的数量不定，input_x * input_y 输入的维度
-            x = tf.placeholder(tf.float32, [None, self.input_x * self.input_y])
+            x = tf.placeholder(tf.float32, [None, 1412])
             # 输出定义
             y = tf.placeholder(tf.float32, [None, self.output_size])
-
             # dropout操作，减少过拟合，其实就是降低上一层某些输入的权重scale，甚至置为0，升高某些输入的权值，甚至置为2，防止评测曲线出现震荡，个人觉得样本较少时很必要
             # 使用占位符，由dropout自动确定scale，也可以自定义，比如0.5，根据tensorflow文档可知，程序中真实使用的值为1/0.5=2，也就是某些输入乘以2，同时某些输入乘以0
             keep_prob = tf.placeholder(tf.float32)
@@ -110,11 +108,45 @@ class CNN:
             return train_op
 
 
-# lls, errors = read_data()
-# batch
+train = True
 cnn = CNN()
-print(cnn.build_model())
+lls, errors = read_data()
+print(lls)
+print(errors)
+with tf.Session() as sess:
+    if train:
+        print("训练模式")
+        # 如果是训练，初始化参数
+        sess.run(tf.global_variables_initializer())
+        # 定义输入和Label以填充容器，训练时dropout为0.25
+        x, y, keep_prob = cnn.build_placeholder()
+        train_feed_dict = {
+            x: lls,
+            y: errors,
+            keep_prob: 0.25
+        }
+        for step in range(150):
+            _, mean_loss_val = sess.run([cnn.loss], feed_dict=train_feed_dict)
 
-
-
+            if step % 10 == 0:
+                print("step = {}\tmean loss = {}".format(step, mean_loss_val))
+    else:
+        print("测试模式")
+        # 如果是测试，载入参数
+        saver.restore(sess, model_path)
+        print("从{}载入模型".format(model_path))
+        # label和名称的对照关系
+        # 定义输入和Label以填充容器，测试时dropout为0
+        test_feed_dict = {
+            datas_placeholder: lls,
+            labels_placeholder: errors,
+            dropout_placeholdr: 0
+        }
+        predicted_labels_val = sess.run(predicted_labels, feed_dict=test_feed_dict)
+        # 真实label与模型预测label
+        for fpath, real_label, predicted_label in zip(fpaths, labels, predicted_labels_val):
+            # 将label id转换为label名
+            real_label_name = label_name_dict[real_label]
+            predicted_label_name = label_name_dict[predicted_label]
+            print("{}\t{} => {}".format(fpath, real_label_name, predicted_label_name))
 

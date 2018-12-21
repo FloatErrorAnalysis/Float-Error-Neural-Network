@@ -4,8 +4,8 @@ import operator
 import numpy as np
 from py.util.BCTool import generate_bytecode
 
-cpp_dir_path = '../../cpp_raw/add/'
-ll_dir_path = '../../cpp_bc/'
+cpp_dir_path = '../cpp_raw/'
+ll_dir_path = '../cpp_bc/'
 
 
 def generate_ll():
@@ -25,10 +25,10 @@ def generate_ll():
 
 def generate_error():
     error_list = []
-    for f in sorted(os.listdir('/root/tmp/dataset/')):
-        if f.split('.')[-1] == 'csv':
-           # print(get_top5(f))
-            error_list.append(get_top5(f))
+    for i in range(1, 31):
+        f = str(i) + '.csv'
+        print(f)
+        error_list.append(get_top5(f))
     return error_list
 
 
@@ -50,6 +50,8 @@ def read_data():
     print('The length of error: ' + str(len(errors)))
     print("shape of lls: {}\tshape of errors: {}".format(lls.shape, errors.shape))
     return lls, errors
+
+
 
 
 if __name__ == '__main__':
